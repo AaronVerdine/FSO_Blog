@@ -34,7 +34,7 @@ export const login_failure = () => {
   };
 };
 
-export const add_profile = () => {
+export const add_profile = (profile) => {
   return {
     type: ACTION_TYPES.ADD_PROFILE,
     payload: profile,
@@ -47,14 +47,14 @@ export const remove_profile = () => {
   };
 };
 
-export const user_input_change = () => {
+export const user_input_change = (text) => {
   return {
     type: ACTION_TYPES.USER_INPUT_CHANGE,
-    payload: Text,
+    payload: text,
   };
 };
 
-export const user_input_submit = () => {
+export const user_input_submit = (text) => {
   return {
     type: ACTION_TYPES.USER_INPUT_SUBMIT,
     payload: text,
