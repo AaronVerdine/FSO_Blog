@@ -1,7 +1,7 @@
 import React from "react";
 
-const Home = (props) => {
-  <div>Home</div>;
+const Home = () => {
+  return <div>Home</div>;
 };
 
-export default HTMLFormElement;
+export default Home;
