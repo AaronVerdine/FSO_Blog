@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Context from "../utils/context";
 
 // display user profile data from authObj passed down through context
