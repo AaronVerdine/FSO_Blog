@@ -56,7 +56,7 @@ export const user_input_change = () => {
 
 export const user_input_submit = () => {
   return {
-    type: ACTION_TYPES.user_input_submit,
+    type: ACTION_TYPES.USER_INPUT_SUBMIT,
     payload: text,
   };
 };
