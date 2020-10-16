@@ -13,7 +13,7 @@ import PrivateComponent from "./hooks/privatecomponent";
 import Profile from "./hooks/profile";
 
 // HOC responsible for private routes
-const PrivateComponent = ({ component: Component, auth }) => (
+const PrivateRoute = ({ component: Component, auth }) => (
   <Route
     render={(props) =>
       auth === true ? (
