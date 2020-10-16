@@ -91,9 +91,8 @@ const ContextState = () => {
 
   return (
     <div>
-      <Context.Provider>
-        value=
-        {{
+      <Context.Provider
+        value={{
           //Reducer1
           stateProp1: stateReducer1.stateprop1,
           stateProp2: stateReducer1.stateprop2,
@@ -118,7 +117,7 @@ const ContextState = () => {
           handleAuth: (props) => handleAuthentication(props),
           authObj: auth,
         }}
-        >
+      >
         <Routes />
       </Context.Provider>
     </div>
