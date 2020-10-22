@@ -16,7 +16,7 @@ const AuthCheck = () => {
       history.replace("/");
     } else {
       context.handleUserLogout();
-      context.handleUserRemoveProfile(context.authObj.userProfile);
+      context.handleUserRemoveProfile();
       history.replace("/");
     }
   }, []);
