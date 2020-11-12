@@ -6,6 +6,7 @@ const pool = require("./db");
     POSTS ROUTES SECTION
 */
 
+// Retrieves all posts from dB
 router.get("/api/get/allposts", (req, res, next) => {
   pool.query(
     `SELECT * FROM posts ORDER BY date_created DESC`,
@@ -15,6 +16,7 @@ router.get("/api/get/allposts", (req, res, next) => {
   );
 });
 
+// Retrieves posts by post_id
 router.get("/api/get/post", (req, res, next) => {
   const post_id = req.query.post_id;
 
@@ -23,6 +25,7 @@ router.get("/api/get/post", (req, res, next) => {
   });
 });
 
+// Saves user post to dB
 router.post("api/post/posttodb", (req, res, next) => {
   const values = [
     req.body.title,
@@ -42,6 +45,7 @@ router.post("api/post/posttodb", (req, res, next) => {
   );
 });
 
+// Deletes all comments associated with post
 router.delete("api/delete/postcomments", (req, res, next) => {
   const post_id = req.body.post_id;
 
@@ -55,6 +59,7 @@ router.delete("api/delete/postcomments", (req, res, next) => {
   );
 });
 
+// Deletes post by post_id
 router.delete("api/delete/post", (req, res, next) => {
   const post_id = req.body.post_id;
 
@@ -64,6 +69,7 @@ router.delete("api/delete/post", (req, res, next) => {
   });
 });
 
+// Adds user_id of user who liked post into like_user_id array and increment count + 1
 router.put("/api/put/likes", (req, res, next) => {
   const uid = [req.body.uid];
   const post_id = String(req.body.post_id);
@@ -88,6 +94,7 @@ router.put("/api/put/likes", (req, res, next) => {
     COMMENTS ROUTES SECTION
 */
 
+// Saves comments to dB
 router.post("/api/post/commenttodb", (req, res, next) => {
   const values = [
     req.body.comment,
@@ -107,6 +114,7 @@ router.post("/api/post/commenttodb", (req, res, next) => {
   );
 });
 
+// Edits existing comments in dB
 router.put("/api/put/commenttodb", (req, res, next) => {
   const values = [
     req.body.comment,
@@ -127,6 +135,7 @@ router.put("/api/put/commenttodb", (req, res, next) => {
   );
 });
 
+// Deletes a single comment
 router.delete("/api/delete/comment", (req, res, next) => {
   const cid = req.body.comment_id;
   console.log(cid);
@@ -142,6 +151,7 @@ router.delete("/api/delete/comment", (req, res, next) => {
   );
 });
 
+// Retrieves all comments associated with a certain post
 router.get("/api/get/allpostcomments", (req, res, next) => {
   const post_id = String(req.query.post_id);
 
@@ -159,6 +169,7 @@ router.get("/api/get/allpostcomments", (req, res, next) => {
     USER PROFILE SECTION
 */
 
+// Saves user profile data from auth0 to the dB
 router.post("/api/posts/userprofiletodb", (req, res, next) => {
   const values = [
     req.body.profile.nickname,
@@ -177,6 +188,7 @@ router.post("/api/posts/userprofiletodb", (req, res, next) => {
   );
 });
 
+// Retrieves user by email
 router.get("/api/get/userprofilefromdb", (req, res, next) => {
   const email = req.query.email;
   console.log(email);
@@ -191,6 +203,7 @@ router.get("/api/get/userprofilefromdb", (req, res, next) => {
   );
 });
 
+// Retrieves user posts by user_id
 router.get("/api/get/userposts", (req, res, next) => {
   const user_id = req.query.user_id;
   console.log(user_id);
@@ -205,6 +218,7 @@ router.get("/api/get/userposts", (req, res, next) => {
   );
 });
 
+// Retrieves another user's profile data
 router.get("/api/get/otheruserprofilefromdb", (req, res, next) => {
   // const email = [ "%" + req.query.email + "%" ]
   const username = String(req.query.username);
@@ -219,6 +233,7 @@ router.get("/api/get/otheruserprofilefromdb", (req, res, next) => {
   );
 });
 
+// Retrieves another user's posts
 router.get("/api/get/otheruserposts", (req, res, next) => {
   const username = String(req.query.username);
 
