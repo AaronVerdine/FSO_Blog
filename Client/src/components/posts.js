@@ -207,6 +207,78 @@ const Posts = (props) => {
       });
     }
   };
+
+  return (
+    <div>
+      <div
+        style={{ opacity: stateLocal.opacity, transition: "opacity2s ease" }}
+      >
+        <br />
+        {context.authState ? (
+          <Link to="/addpost">
+            <Button variant="contained" color="primary">
+              Add Post
+            </Button>
+          </Link>
+        ) : (
+          <Link to="/signup">
+            <Button variant="contained" color="primary">
+              Sign Up To Add Post
+            </Button>
+          </Link>
+        )}
+      </div>
+      <br />
+      <TexField
+        id="search"
+        label="Search"
+        margin="normal"
+        onChange={handleSearch}
+      />
+      <hr />
+
+      <br />
+      <div>
+        {stateLocal.posts_search
+          ? stateLocal.posts_search.map((post) => (
+              <RenderPosts key={posts.pid + 1000} post={post} />
+            ))
+          : null}
+      </div>
+
+      <h1>Posts</h1>
+      <div>
+        <div className="FlexRow">
+          <button onClick={() => page_change(1)}> First </button>
+          <button onClick={() => page_change(stateLocal.currentPage - 1)}>
+            {" "}
+            Prev{" "}
+          </button>
+          {stateLocal.pages_slice.map((page) => (
+            <div
+              onClick={() => page_change(page)}
+              className={
+                stateLocal.currentPage === page
+                  ? "pagination-active"
+                  : "pagination-item"
+              }
+              key={page}
+            >
+              {page}
+            </div>
+          ))}
+          <button onClick={() => page_change(stateLocal.currentPage + 1)}>
+            {" "}
+            Next{" "}
+          </button>
+          <button onClick={() => page_change(stateLocal.max_page)}>
+            {" "}
+            Last{" "}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Posts;
