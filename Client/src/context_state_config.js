@@ -2,7 +2,7 @@ import React, { useReducer } from "react";
 import Context from "./utils/context";
 import * as ACTIONS from "./store/actions/actions";
 
-import * as Reducer1 from "./store/reducers/plain_reducer";
+// import * as Reducer1 from "./store/reducers/plain_reducer";
 import * as AuthReducer from "./store/reducers/auth_reducer";
 import * as FormReducer from "./store/reducers/form_reducer";
 import * as PostsReducer from "./store/reducers/posts_reducer";
@@ -20,17 +20,17 @@ const ContextState = () => {
         Posts Reducer
     */
 
-  const [statePosts, dispatchPosts] = useReducer(
+  const [statePostsReducer, dispatchPostsReducer] = useReducer(
     PostsReducer.PostsReducer,
     PostsReducer.initialState
   );
 
   const handleSetPosts = (posts) => {
-    dispatchPosts(ACTIONS.set_db_posts(posts));
+    dispatchPostsReducer(ACTIONS.set_db_posts(posts));
   };
 
   const handleRemovePosts = () => {
-    dispatchPosts(ACTIONS.remove_db_posts());
+    dispatchPostsReducer(ACTIONS.remove_db_posts());
   };
 
   /*
@@ -38,7 +38,7 @@ const ContextState = () => {
     */
 
   const [stateAuthReducer, dispatchAuthReducer] = useReducer(
-    AuthReducer.AuthenReducer,
+    AuthReducer.AuthReducer,
     AuthReducer.initialState
   );
 
@@ -99,10 +99,10 @@ const ContextState = () => {
       <Context.Provider
         value={{
           //Reducer1
-          stateProp1: stateReducer1.stateprop1,
-          stateProp2: stateReducer1.stateprop2,
-          dispatchContextTrue: () => handleDispatchTrue(),
-          dispatchContextFalse: () => handleDispatchFalse(),
+          // stateProp1: stateReducer1.stateprop1,
+          // stateProp2: stateReducer1.stateprop2,
+          // dispatchContextTrue: () => handleDispatchTrue(),
+          // dispatchContextFalse: () => handleDispatchFalse(),
 
           // Form Reducer
           useContextChangeState: stateFormReducer.user_textChange,

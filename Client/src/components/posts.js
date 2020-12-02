@@ -11,7 +11,7 @@ import TextField from "@material-ui/core/TextField";
 
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import CArdHeader from "@material-ui/core/CardHeader";
+import CardHeader from "@material-ui/core/CardHeader";
 
 import "../App.css";
 import "../styles/pagination.css";
