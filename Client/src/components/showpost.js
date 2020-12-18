@@ -78,6 +78,175 @@ const ShowPost = (props) => {
             }
         }
     }, [props.location, stateLocal])
+
+    const handleCommentSubmit = (submitted_comment) => {
+        if(stateLocal.comments_arr) {
+            setState({...stateLocal, comments_arr: [submitted_comment, ...stateLocal.comments_arr]})
+        } else {
+            setState({...stateLocal, comments_arr: [submitted_comment]})
+        }
+    };
+
+    const handleCommentUpdate = (comment) => {
+        const commentIndex = stateLocal.comments_arr.findIndex(com => com.cid === comment.cid)
+        var newArr = [...stateLocal.comments_arr]
+        newArr[commentIndex] = comment
+
+        setTimeout(() = setState({...stateLocal, comments_arr: [...newArr], edit_comment_id: 0}), 100)
+    };
+
+    const handleCommentDelete = (cid) => {
+        setState({...stateLocal, delete_comment_id: cid})
+        const newArr = stateLocal.comments_arr.filter(com => com.cid !==cid)
+        setState({...stateLocal, comments_arr: newArr})
+    }
+
+    const handleEditClose = () => {
+        setState({...stateLocal, edit_comment_id: 0})
+    }
+
+    const RenderComments = (props) => {
+        return(
+            <div className={stateLocal.delete_comment_id === props.comment.cid 
+                            ? "FadeOutComment" 
+                            : "CommentStyles"}>
+                <div>
+                    <p>{props.comment.comment}</p>
+                    <small>
+                        { props.comment.date_created === 'Just Now'
+                        ? <div> {props.comment.isEdited
+                            ? <span> Edited </span>
+                            : <span> Just Now </span>}</div> 
+                        : props.comment.date_created
+                        }
+                    </small>
+                    <p> By: { props.comment.author } </p>
+                </div>
+                <div>
+                {props.cur_user_id === props.comment.user_id
+                    ? !props.isEditing
+                            ? <div>
+                                <Button onClick={() => setState({...stateLocal,
+                                                                edit_comment_id: props.comment.cid,
+                                                                edit_comment: props.comment.comment
+                                                                })
+                                                }>
+                                    Edit
+                                </Button>
+                              </div> 
+                        : <form onSubmit={(event, cid) => handleCommentUpdate(event, props.comment.cid)}>
+                            <input 
+                                autoFocus={true}
+                                name="edit_comment"
+                                id="edited_comment"
+                                label="Comment"
+                                value={stateLocal.edit_comment}
+                                onChange={handleEditCommentChange}
+                            />
+                            <br />
+                            <Button type='submit'>
+                                Agree
+                            </Button>
+                            <Button type="button" onClick={handleEditFormClose}>
+                                Cancel
+                            </Button>
+                            <button onClick={() => handleDeleteComment(props.comment.cid)}>
+                                Delete
+                            </button>
+                        </form>
+                    : null }
+                </div>
+            </div>
+        )
+    }
+
+    const handleEditCommentChange = (event) => (
+        setState({...stateLocal, edit_comment: event.target.value})
+    )
+
+    const handleSubmit = (event) => {
+        event.preventDefault()
+        setState({...stateLocal, comment: ''})
+
+        const comment = event.target.comment.value
+        const user_id = context.dbProfilestate[0].uid
+        const username = context.deProfileState[0].username
+        const post_id = stateLocal.post_id
+        const current_time = "Just Now"
+        const temp_cid = Math.floor(Math.random() * 1000);
+
+        const submitted_comment = {cid: temp_cid,
+                                   comment: comment,
+                                   user_id: user_id,
+                                   author: username,
+                                   date_created: current_time }
+        
+        const data = {comment: event.target.comment.value,
+                      post_id: pid,
+                      user_id: user_id,
+                      username: username}
+
+        axios.post('/api/post/commenttodb', data)
+             .then(res => console.log(res))
+             .catch(err => console.log(err))
+        window.scroll({top: 0, left: 0, behavior: 'smooth'})
+        handleCommentSubmit(submitted_comment)
+    }
+
+    const handleUpdate = (event) => {
+        event.preventDefault()
+        console.log(event)
+        console.log(cid)
+        const comment = event.target.editted_comment.value
+        const comment_id = cid
+        const post_id = stateLocal.post_id
+        const user_id = context.dbProfileState[0].uid
+        const username = context.dbProfileState[0].username
+        const isEdited = true
+        const current_time = "Just Now"
+
+        const edited_comment = {cid: comment_id,
+                                comment: comment,
+                                user_id: user_id,
+                                author: username,
+                                date_created: current_time,
+                                isEdited: isEdited }
+
+        const data = {cid: comment_id,
+                      comment: comment,
+                      post_id: post_id,
+                      user_id: user_id,
+                      username: username }
+
+        axios.put('/api/put/commenttodb', data)
+             .then(res => console.log(res))
+             .catch((err) => console.log(err))
+        handleCommentUpdate(edited_comment)
+    }
+
+    const handleDeleteComment = (cid) => {
+        const comment_id = cid
+        console.log(cid)
+        axios.delete('/api/delete/comment', {data: {comment_id: comment_id}})
+             .then(res => console.log(res))
+             .catch((err) => console.log(err))
+        handleCommentDelete(cid)
+    }
+
+    const handleLikes = () => {
+        const user_id = context.dbProfileState[0].uid
+        const post_id = stateLocal.post_id
+
+        const data = { uid: user_id, post_id: post_id }
+        console.log(data)
+        axios.put('/api/put/likes', data)
+             .then( !stateLocal.like_user_ids.includes(user_id) && stateLocal.like_post
+                ? setState({...stateLocal,
+                            likes: stateLocal.likes + 1,
+                            like_post: false})
+                : null)
+            .catch(err => console.log(err))
+    }
     
     
     return (  );
