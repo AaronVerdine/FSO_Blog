@@ -297,16 +297,12 @@ const ShowPost = (props) => {
                     />
                     <br />
 
-                    {context.authState
-                        ? <Button variant="contained" color="primary" type="submit">
+                    
+                         <Button variant="contained" color="primary" type="submit">
                             Submit
                           </Button>
-                        : <Link to="/signup">
-                            <Button variant="contained" color="primary">
-                                Signup to Comment
-                            </Button>
-                          </Link>
-                    }
+                    
+                    
                 </form>
             </div>
         </div>
