@@ -21,11 +21,11 @@ const EditPost = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    const user_id = context.dbProfileState[0].uid;
-    const username = context.dbProfileState[0].username;
+    const user_id = props.location.state.post.post.user_id;
+    const username = props.location.state.post.post.author;
     const pid = props.location.state.post.post.pid;
     const title = event.target.title.value;
-    const body = vent.target.body.value;
+    const body = event.target.body.value;
 
     const data = {
       title: title,
