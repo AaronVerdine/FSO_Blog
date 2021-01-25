@@ -107,9 +107,8 @@ const ShowPost = (props) => {
 
     const RenderComments = (props) => {
         return(
-            <div className={stateLocal.delete_comment_id === props.comment.cid 
-                            ? "FadeOutComment" 
-                            : "CommentStyles"}>
+            
+            <div>
                 <div>
                     <p>{props.comment.comment}</p>
                     <small>
