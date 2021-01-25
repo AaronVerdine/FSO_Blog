@@ -140,6 +140,14 @@ const Posts = (props) => {
         <CardContent>
           <span style={{ overflow: "hidden" }}> {post.post.body} </span>
         </CardContent>
+        <button>
+          <Link
+            to={{ pathname: "/editpost/" + post.post.pid, state: { post } }}
+          >
+            Edit
+          </Link>
+        </button>
+        <button onClick={() => deletePost(post.post.pid)}>Delete</button>
       </Card>
     </div>
   );
